@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="通过 8 道生活方式选择题，找到与你当前节奏更合拍的城市。"
+    />
+    <meta name="theme-color" content="#ecece6" />
+    <title>城市适配测试</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-noise" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <button class="brand" id="brandButton" type="button" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>城市适配测试</span>
+      </button>
+      <p class="header-note" id="headerNote">8 道生活方式选择题</p>
+    </header>
+
+    <main id="app" aria-live="polite"></main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <template id="introTemplate">
+      <section class="screen intro-screen" aria-labelledby="introTitle">
+        <div class="intro-copy reveal-item">
+          <p class="eyebrow">一次关于生活方式的小测验</p>
+          <h1 id="introTitle">哪座城市，<br />会接住你的生活？</h1>
+          <p class="intro-lead">
+            不问你喜欢哪里，只看你怎样工作、休息、相处与生活。
+          </p>
+          <button class="primary-button" id="startButton" type="button">
+            开始测试
+            <span aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <div class="city-collage reveal-item" aria-label="城市生活影像">
+          <figure class="city-photo city-photo-main">
+            <img src="assets/hangzhou.jpg" alt="杭州西湖与群山" />
+          </figure>
+          <figure class="city-photo city-photo-top">
+            <img src="assets/shanghai.jpg" alt="上海夜景与城市天际线" />
+          </figure>
+          <figure class="city-photo city-photo-bottom">
+            <img src="assets/dali.jpg" alt="大理洱海与远山" />
+          </figure>
+          <div class="collage-caption" aria-hidden="true">
+            <span>向外生长</span>
+            <span>向内安顿</span>
+          </div>
+        </div>
+      </section>
+    </template>
+
+    <template id="quizTemplate">
+      <section class="screen quiz-screen" aria-labelledby="questionTitle">
+        <div class="quiz-rail">
+          <div class="progress-copy">
+            <span id="progressCurrent">01</span>
+            <span aria-hidden="true">/</span>
+            <span>08</span>
+          </div>
+          <div class="progress-ticks" id="progressTicks" aria-label="答题进度"></div>
+          <p class="question-context" id="questionContext"></p>
+        </div>
+
+        <div class="question-panel" id="questionPanel">
+          <p class="question-kicker" id="questionKicker"></p>
+          <h1 id="questionTitle"></h1>
+          <div class="options-grid" id="optionsGrid" role="radiogroup"></div>
+
+          <div class="quiz-actions">
+            <button class="text-button" id="backButton" type="button">
+              <span aria-hidden="true">←</span>
+              返回
+            </button>
+            <button class="primary-button" id="nextButton" type="button" disabled>
+              继续
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+          <p class="selection-error" id="selectionError" role="alert"></p>
+        </div>
+      </section>
+    </template>
+
+    <template id="loadingTemplate">
+      <section class="screen loading-screen" aria-labelledby="loadingTitle">
+        <div class="loading-copy">
+          <p class="question-kicker">正在整理你的选择</p>
+          <h1 id="loadingTitle">把生活的线索，<br />放回城市里。</h1>
+        </div>
+        <div class="loading-visual" aria-hidden="true">
+          <div class="loading-line"></div>
+          <div class="loading-line loading-line-short"></div>
+          <div class="loading-photo"></div>
+        </div>
+      </section>
+    </template>
+
+    <template id="resultTemplate">
+      <section class="result-screen" aria-labelledby="resultTitle">
+        <div class="result-hero">
+          <figure class="result-image reveal-item">
+            <img id="resultImage" src="" alt="" />
+          </figure>
+
+          <div class="result-summary reveal-item">
+            <p class="result-label">你的城市答案</p>
+            <h1 id="resultTitle"></h1>
+            <p class="result-subtitle" id="resultSubtitle"></p>
+            <div class="match-score">
+              <strong id="matchScore"></strong>
+              <span>生活方式重合度</span>
+            </div>
+            <div class="trait-list" id="traitList" aria-label="你的生活倾向"></div>
+          </div>
+        </div>
+
+        <div class="result-body">
+          <section class="result-explanation" aria-labelledby="whyTitle">
+            <h2 id="whyTitle">为什么是这里</h2>
+            <p class="result-intro" id="resultIntro"></p>
+            <div class="reason-grid" id="reasonGrid"></div>
+          </section>
+
+          <aside class="city-note" aria-labelledby="noteTitle">
+            <h2 id="noteTitle">适合你的日常</h2>
+            <p id="idealDay"></p>
+            <div class="reality-check">
+              <h3>也要留意</h3>
+              <p id="tradeoff"></p>
+            </div>
+          </aside>
+
+          <section class="alternatives" aria-labelledby="alternativesTitle">
+            <h2 id="alternativesTitle">另外两座，也值得你看看</h2>
+            <div class="alternatives-list" id="alternativesList"></div>
+          </section>
+
+          <div class="result-actions">
+            <button class="primary-button" id="restartButton" type="button">
+              重新测试
+              <span aria-hidden="true">↻</span>
+            </button>
+            <button class="secondary-button" id="shareButton" type="button">
+              分享结果
+            </button>
+          </div>
+
+          <p class="disclaimer">
+            这是一份生活方式探索，不替代真实的就业、住房与迁居调研。
+          </p>
+
+          <details class="photo-credits">
+            <summary>摄影素材来源</summary>
+            <div id="creditsList"></div>
+          </details>
+        </div>
+      </section>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
